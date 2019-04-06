@@ -48,4 +48,24 @@ func main() {
 }
 ```
 
-Запись в поток осуществляется аналогично функцией `binary.Write(w io.Writer, order ByteOrder, data interface{}) error`. Главное ограничение пакета — он работает только со структурами с полями фиксированной длины. Работает довольно быстро, хоть и через reflection.
+Запись в поток осуществляется аналогично функцией `binary.Write(w io.Writer, order ByteOrder, data interface{}) error`. 
+
+Также можно читать/писать целые числа в нужном формате:
+
+```go
+package main
+
+import (
+	"encoding/binary"
+	"fmt"
+)
+
+func main() {
+	b := make([]byte, 4)
+	binary.LittleEndian.PutUint16(b[0:], 0x03e8)
+	binary.LittleEndian.PutUint16(b[2:], 0x07d0)
+	fmt.Printf("% x\n", b)
+}
+```
+
+Главное ограничение пакета — он работает только со структурами с полями фиксированной длины. Работает довольно быстро, хоть и через reflection.
